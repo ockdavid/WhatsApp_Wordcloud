@@ -79,3 +79,4 @@ if uploaded_file is not None and st.session_state.language_selected:
     st.number_input('How many words do you want to show?', format='%f', key='n_words')
     max_words_inserted = int(st.session_state.n_words)
     st.write('Words: ', max_words_inserted)
+
