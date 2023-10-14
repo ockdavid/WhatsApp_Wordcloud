@@ -39,10 +39,43 @@ if "language" not in st.session_state:
 if "n_words" not in st.session_state:
     st.session_state.n_words = 0
 
+if "language_selected" not in st.session_state:
+    st.session_state.language_selected = "False"
+
 
 def show_image():
     st.session_state.image = True
 
 
+def select_language():
+    st.session_state.language_selected = "True"
+
+
 # Upload the file to analyze
 uploaded_file = st.file_uploader("Upload file to analyze", type=['txt'])
+
+option = st.selectbox(
+    'WhatsApp Chat language',
+    ('English', 'Español'),
+    index=None,
+    on_change=select_language,
+    key='language')
+
+st.write(st.session_state.language)
+
+# Very if there's a file
+if uploaded_file is not None and st.session_state.language_selected:
+    # Read the doc
+    chat = uploaded_file.read().decode('utf-8')
+
+    if st.session_state.language == "English":
+        st.write('En inglés')
+        words_as_string = NLP_analysis_english(chat)
+    elif st.session_state.language == "Español":
+        st.write('En español')
+        words_as_string = NLP_analysis_spanish(chat)
+
+    # Get the number of words for the word cloud
+    st.number_input('How many words do you want to show?', format='%f', key='n_words')
+    max_words_inserted = int(st.session_state.n_words)
+    st.write('Words: ', max_words_inserted)
