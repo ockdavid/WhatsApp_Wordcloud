@@ -60,7 +60,7 @@ with col1:
     option = st.selectbox(
         'WhatsApp Chat language',
         ('English', 'Español'),
-        index=None,
+        index=0,
         on_change=select_language,
         key='language')
 
